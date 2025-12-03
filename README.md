@@ -1,69 +1,78 @@
-# C/C++ Project Setup Tool
+# Project Initialization Tool
 
-This repository provides a simple shell script to quickly initialize a C/C++ project in any directory by copying a pre-configured template.
+This repository provides a ready-to-use C/C++ project template and a convenient shell command to initialize new projects quickly.
 
----
+## Repository Structure
 
-## Features
+After installation, the repository will be organized as follows:
 
-* Automatically clones the template repository to `~/Downloads/msk_setup` if it doesn’t exist.
-* Copies all template files into the current working directory.
-* Updates the template repository if it already exists.
-
----
-
-## Requirements
-
-* Git must be installed on your system.
-* Bash shell (Linux, macOS, WSL on Windows).
-
----
-
-## Installation
-
-1. Clone this repository or download the `init_project.sh` script:
-
-```bash
-git clone https://github.com/malosoukileon/C-Cpp-tools.git
+```
+msk_setup/
+├── setup/         # Contains all template files (Makefile, source files, headers, etc.)
+├── install/       # Contains the msk.sh script used to initialize projects
+├── install_msk.sh # Installer script
+└── README.md      # This file
 ```
 
-2. Make the script executable:
+## Scripts
+
+### install_msk.sh
+
+This script sets up the repository and creates the alias to run the project initialization command.
+
+**Usage:**
 
 ```bash
-chmod +x path/to/init_project.sh
+bash install_msk.sh [optional_shell_rc_file]
 ```
 
-3. (Optional) Add the script to your PATH to run it from anywhere:
+* If you provide a shell RC file (e.g., `~/.zshrc` or `~/.bashrc`), it will use that file to add the alias.
+* If no file is provided, it will attempt to detect your shell and update the default RC file.
+
+**What it does:**
+
+1. Clones or updates the template repository at `~/Downloads/msk_setup`.
+2. Organizes the repo: moves all template files into `setup/`.
+3. Copies itself as `msk.sh` into the `install/` folder.
+4. Adds the `msk` alias to the specified shell RC file.
+5. Prompts you to source your RC file to activate the alias.
+
+### msk.sh
+
+This script copies the template files from `setup/` into the current directory to initialize a new project.
+
+**Usage:**
 
 ```bash
-export PATH="$PATH:/path/to/script_directory"
+msk
 ```
 
----
+**Requirements:**
 
-## Usage
+* You must run `install_msk.sh` first to set up the alias and copy `msk.sh` into the `install/` folder.
 
-Navigate to the folder where you want to initialize a new project, then run:
+**What it does:**
+
+1. Checks if `setup/` exists.
+2. Copies all template files from `setup/` into the current working directory.
+3. Prints a success message with the current directory.
+
+## Example Workflow
 
 ```bash
-init_project.sh
+# 1. Clone the repository
+git clone https://github.com/malosoukileon/C-Cpp-tools.git ~/Downloads/msk_setup
+cd ~/Downloads/msk_setup
+
+# 2. Run the installer
+bash install_msk.sh ~/.zshrc   # or ~/.bashrc depending on your shell
+
+# 3. Source your shell RC file
+source ~/.zshrc   # or ~/.bashrc
+
+# 4. Initialize a new project anywhere
+cd ~/projects/my_new_project
+msk
 ```
 
-The script will:
-
-1. Clone the template repository to `~/Downloads/msk_setup` if it doesn't exist.
-2. Pull the latest updates if the repository already exists.
-3. Copy all files from the template to your current directory.
-
----
-
-## Notes
-
-* Existing files in your current directory **may be overwritten** if they have the same name as files in the template.
-* You can safely run the script multiple times; it will update the template repository and copy the files again.
-
----
-
-## Repository URL
-
-Template repository: [https://github.com/malosoukileon/C-Cpp-tools](https://github.com/malosoukileon/C-Cpp-tools)
+Your new project directory now contains all the template files from `setup/` and is ready for development.
