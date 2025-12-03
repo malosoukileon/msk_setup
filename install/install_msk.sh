@@ -10,7 +10,8 @@ RC_FILE="${1:-$HOME/.bashrc}"
 TARGET_DIR="$HOME/.msk_setup"
 
 # Current root directory of the project
-SOURCE_DIR="$(pwd)/../../msk_setup"
+SOURCE_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
+NAME="$(basename "$SOURCE_DIR")"
 
 # Check if the target directory already exists
 if [ -d "$TARGET_DIR" ]; then
